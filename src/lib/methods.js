@@ -195,16 +195,21 @@ const getOne = async (params, resourceName, resourceData) => {
 
 const getList = async (params, resourceName, resourceData) => {
   if (params.pagination) {
+    const { page, perPage } = params.pagination;
     let values = [];
     let snapshots = params.sort
       ? await firebase
           .firestore()
           .collection(resourceName)
           .orderBy(params.sort.field, params.sort.order.toLowerCase())
+          .startAfter(page * perPage)
+          .limit(perPage)
           .get()
       : await firebase
           .firestore()
           .collection(resourceName)
+          .startAfter(page * perPage)
+          .limit(perPage)
           .get();
 
     for (const snapshot of snapshots.docs) {
@@ -243,7 +248,6 @@ const getList = async (params, resourceName, resourceData) => {
     }
 
     const keys = values.map(i => i.id);
-    const { page, perPage } = params.pagination;
     const _start = (page - 1) * perPage;
     const _end = page * perPage;
     const data = values ? values.slice(_start, _end) : [];
