@@ -194,6 +194,7 @@ const getOne = async (params, resourceName, resourceData) => {
  */
 
 const getList = async (params, resourceName, resourceData) => {
+  // resourceName === 'users' -> true
   if (params.pagination) {
     const { page, perPage } = params.pagination;
     let values = [];
@@ -252,7 +253,12 @@ const getList = async (params, resourceName, resourceData) => {
     const _end = page * perPage;
     const data = values ? values.slice(_start, _end) : [];
     const ids = keys.slice(_start, _end) || [];
-    const total = values ? values.length : 0;
+    // const total = values ? values.length : 0;
+    const configDoc = await firebase
+      .firestore()
+      .collection(resourceName)
+      .doc('config');
+    const total = configDoc.numberOfDocs || 30000;
     return { data, ids, total };
   } else {
     throw new Error('Error processing request');
