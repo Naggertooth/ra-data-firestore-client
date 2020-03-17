@@ -198,18 +198,19 @@ const getList = async (params, resourceName, resourceData) => {
   if (params.pagination) {
     const { page, perPage } = params.pagination;
     let values = [];
+    const startAfter = page * perPage === 0 ? 0 : page * perPage - 1;
     let snapshots = params.sort
       ? await firebase
           .firestore()
           .collection(resourceName)
           .orderBy(params.sort.field, params.sort.order.toLowerCase())
-          .startAfter(page * perPage)
+          .startAfter(startAfter)
           .limit(perPage)
           .get()
       : await firebase
           .firestore()
           .collection(resourceName)
-          .startAfter(page * perPage)
+          .startAfter(startAfter)
           .limit(perPage)
           .get();
 
@@ -258,7 +259,7 @@ const getList = async (params, resourceName, resourceData) => {
       .firestore()
       .collection(resourceName)
       .doc('config');
-    const total = configDoc.numberOfDocs || 30000;
+    const total = configDoc.numberOfDocs || 30001;
     return { data, ids, total };
   } else {
     throw new Error('Error processing request');

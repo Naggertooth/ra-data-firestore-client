@@ -1,6 +1,6 @@
 {
   "name": "ra-data-firestore-client-naggertooth",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Firestore Client for react-admin with very local feature on GET_LIST",
   "main": "build/index.js",
   "jsnext:main": "es/index.js",
