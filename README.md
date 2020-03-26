@@ -37,9 +37,11 @@ For AuthProvider, don't forget to add the user UID to your Firestore DB under /u
 
 ---
 
+## Important
+
 Firestore doesn't have counter of documents in a collection without taking a snap
 So I got forced to add serverside function that increments `{collection}/config/numberOfDocs` with write operations
-Coz my collection counts over than 50000 docs
+because my collection counts over than 50000 docs
 
 ---
 

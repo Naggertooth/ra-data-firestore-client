@@ -197,8 +197,8 @@ const getList = async (params, resourceName, resourceData) => {
   // resourceName === 'users' -> true
   if (params.pagination) {
     const { page, perPage } = params.pagination;
-    let values = [];
-    const startAfter = page * perPage === 0 ? 0 : page * perPage - 1;
+    const startAfter = (page - 1) * perPage <= 0 ? 0 : (page - 1) * perPage;
+    let values = Array(startAfter);
     let snapshots = params.sort
       ? await firebase
           .firestore()
