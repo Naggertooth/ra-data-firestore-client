@@ -197,23 +197,19 @@ const getList = async (params, resourceName, resourceData) => {
   // resourceName === 'users' -> true
   if (params.pagination) {
     const { page, perPage } = params.pagination;
-    const startAfter = (page - 1) * perPage <= 0 ? 0 : (page - 1) * perPage;
-    let values = Array(startAfter)
-      .fill(1)
-      .map((i, ind) => ({ id: `${ind}-${Math.random()}` }));
+    const limit = page * perPage <= 0 ? 0 : page * perPage;
+    let values = [];
     let snapshots = params.sort
       ? await firebase
           .firestore()
           .collection(resourceName)
           .orderBy(params.sort.field, params.sort.order.toLowerCase())
-          .startAfter(startAfter)
-          .limit(perPage)
+          .limit(limit)
           .get()
       : await firebase
           .firestore()
           .collection(resourceName)
-          .startAfter(startAfter)
-          .limit(perPage)
+          .limit(limit)
           .get();
 
     for (const snapshot of snapshots.docs) {

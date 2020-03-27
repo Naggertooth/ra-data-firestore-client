@@ -91,7 +91,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "dependencies": {
-    "firebase": "^5.9.3",
+    "firebase": "^7.12.0",
     "prop-types": "^15.6.0",
     "react": "16.5.0",
     "react-admin": "^2.3.2",
