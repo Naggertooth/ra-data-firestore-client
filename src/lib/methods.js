@@ -248,8 +248,8 @@ const getList = async (params, resourceName, resourceData) => {
     }
 
     const keys = values.map(i => i.id);
-    const _start = (page - 1) * perPage;
-    const _end = page * perPage;
+    const _start = 0;
+    const _end = perPage;
     const data = values ? values.slice(_start, _end) : [];
     const ids = keys.slice(_start, _end) || [];
     // const total = values ? values.length : 0;
